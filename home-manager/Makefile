@@ -68,29 +68,29 @@ backup: ## Backup existing dotfiles
 
 home: backup check ## Apply local macOS configuration (tmontfort)
 	@echo "$(BLUE)==> Applying home configuration...$(NC)"
-	@nix run home-manager/master -- switch --flake .#home -b backup
+	@nix run .#home-manager -- switch --flake .#home -b backup
 	@echo "$(GREEN)✓ Home configuration applied successfully!$(NC)"
 	@echo "$(YELLOW)Run 'source ~/.zshrc' or restart your terminal$(NC)"
 
 bataquaman: backup check ## Apply bataquaman Linux configuration (tmontfort)
 	@echo "$(BLUE)==> Applying bataquaman configuration...$(NC)"
-	@nix run home-manager/master -- switch --flake .#bataquaman -b backup
+	@nix run .#home-manager -- switch --flake .#bataquaman -b backup
 	@echo "$(GREEN)✓ Bataquaman configuration applied successfully!$(NC)"
 	@echo "$(YELLOW)Run 'source ~/.zshrc' or restart your terminal$(NC)"
 
 vm: backup check ## Apply VM configuration (auto-detects user)
 	@echo "$(BLUE)==> Applying VM configuration...$(NC)"
 	@if [ "$(USERNAME)" = "nvidia" ]; then \
-		nix run home-manager/master -- switch --flake .#brev-vm-gpu -b backup; \
+		nix run .#home-manager -- switch --flake .#brev-vm-gpu -b backup; \
 	else \
-		nix run home-manager/master -- switch --flake .#brev-vm -b backup; \
+		nix run .#home-manager -- switch --flake .#brev-vm -b backup; \
 	fi
 	@echo "$(GREEN)✓ VM configuration applied successfully!$(NC)"
 	@echo "$(YELLOW)Run 'source ~/.zshrc' or restart your terminal$(NC)"
 
 vm-arm: backup check ## Apply VM configuration (ubuntu@linux aarch64)
 	@echo "$(BLUE)==> Applying ARM VM configuration...$(NC)"
-	@nix run home-manager/master -- switch --flake .#brev-vm-arm -b backup
+	@nix run .#home-manager -- switch --flake .#brev-vm-arm -b backup
 	@echo "$(GREEN)✓ ARM VM configuration applied successfully!$(NC)"
 	@echo "$(YELLOW)Run 'source ~/.zshrc' or restart your terminal$(NC)"
 

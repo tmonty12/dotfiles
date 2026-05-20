@@ -43,7 +43,7 @@ Targets are defined in `flake.nix`:
 You can also run Home Manager directly:
 
 ```bash
-nix run home-manager/master -- switch --flake .#home -b backup
+nix run .#home-manager -- switch --flake .#home -b backup
 ```
 
 ## Layout
