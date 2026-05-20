@@ -1,7 +1,7 @@
 # Home Manager Makefile
 # Commands to manage Nix home-manager configuration
 
-.PHONY: help install work home vm vm-arm clean backup check
+.PHONY: help install home vm vm-arm clean backup check
 
 # Colors
 GREEN := \033[0;32m
@@ -26,7 +26,7 @@ help: ## Show this help message
 	@echo "$(YELLOW)First time setup:$(NC)"
 	@echo "  1. Run 'make install' to install Nix"
 	@echo "  2. Restart your terminal"
-	@echo "  3. Run 'make home', 'make work', or 'make vm'"
+	@echo "  3. Run 'make home' or 'make vm'"
 
 install: ## Install Nix using official installer
 	@echo "$(BLUE)==> Installing Nix with official installer...$(NC)"
@@ -34,7 +34,7 @@ install: ## Install Nix using official installer
 		echo "$(YELLOW)Installing Nix for $(OS) ($(ARCH))...$(NC)"; \
 		curl -L https://nixos.org/nix/install | sh -s -- --daemon; \
 		echo "$(GREEN)✓ Nix installed successfully$(NC)"; \
-			echo "$(YELLOW)! Please restart your terminal and run 'make work/home/vm'$(NC)"; \
+			echo "$(YELLOW)! Please restart your terminal and run 'make home' or 'make vm'$(NC)"; \
 	else \
 		echo "$(GREEN)✓ Nix is already installed$(NC)"; \
 	fi
@@ -66,12 +66,6 @@ backup: ## Backup existing dotfiles
 	done
 	@echo "$(YELLOW)Backup location: $(BACKUP_DIR)$(NC)"
 
-work: backup check ## Apply work configuration
-	@echo "$(BLUE)==> Applying work configuration...$(NC)"
-	@nix run home-manager/master -- switch --flake .#work -b backup
-	@echo "$(GREEN)✓ Work configuration applied successfully!$(NC)"
-	@echo "$(YELLOW)Run 'source ~/.zshrc' or restart your terminal$(NC)"
-
 home: backup check ## Apply local macOS configuration (tmontfort)
 	@echo "$(BLUE)==> Applying home configuration...$(NC)"
 	@nix run home-manager/master -- switch --flake .#home -b backup
@@ -97,7 +91,6 @@ vm-arm: backup check ## Apply VM configuration (ubuntu@linux aarch64)
 rebuild: check ## Quick rebuild current configuration
 	@echo "$(BLUE)==> Rebuilding current configuration...$(NC)"
 	@echo "$(YELLOW)Please specify which config to rebuild:$(NC)"
-	@echo "  make work   - for work config"
 	@echo "  make home   - for home config"
 	@echo "  make vm     - for VM config"
 
