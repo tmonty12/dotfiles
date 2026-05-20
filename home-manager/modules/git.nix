@@ -30,7 +30,7 @@
 
       commit.gpgsign = true;
       gpg.format = "ssh";
-      user.signingkey = "~/.ssh/id_ed2551.pub";
+      user.signingkey = "~/.ssh/id_rsa.pub";
       
       url = {
         "git@github.com:" = {
