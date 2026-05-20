@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, useForwardedSshAgent ? false, ... }:
 
 {
   programs.git = {
@@ -29,14 +29,19 @@
       };
 
       commit.gpgsign = true;
-      gpg.format = "ssh";
-      user.signingkey = "~/.ssh/id_rsa.pub";
+      gpg = {
+        format = "ssh";
+      } // lib.optionalAttrs useForwardedSshAgent {
+        ssh.defaultKeyCommand = "ssh-add -L";
+      };
       
       url = {
         "git@github.com:" = {
           insteadOf = "https://github.com/";
         };
       };
+    } // lib.optionalAttrs (!useForwardedSshAgent) {
+      user.signingkey = "~/.ssh/id_rsa.pub";
     };
     
     # Basic ignore patterns
