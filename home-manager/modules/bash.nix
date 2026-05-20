@@ -67,26 +67,6 @@
         rm -f -- "$tmp"
       }
       
-      # Lazy-load AI functions for faster shell startup
-      _ai_functions_loaded=0
-      _load_ai_functions() {
-        if [ "$_ai_functions_loaded" -eq 0 ]; then
-          source ${../functions/ai-functions.sh} > /dev/null 2>&1 || true
-          _ai_functions_loaded=1
-        fi
-      }
-
-      # Create lazy-loading wrappers for AI commands
-      gcai() {
-        _load_ai_functions
-        git_ai_commit "$@"
-      }
-
-      gprai() {
-        _load_ai_functions
-        gprai "$@"
-      }
-
       # source local machine-specific configs 
       [ -f "$HOME/.bashrc.local" ] && . "$HOME/.bashrc.local"
     '';
