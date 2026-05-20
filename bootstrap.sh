@@ -283,8 +283,8 @@ ok "Wrote ~/.config/starship.toml"
 # 12. Git config extras -- mirrors modules/git.nix
 # ---------------------------------------------------------------------------
 info "Git config"
-git config --global user.name "Ishan Dhanani"
-git config --global user.email "ishandhanani@gmail.com"
+git config --global user.name "Thomas Montfort"
+git config --global user.email "tjmontfort12@gmail.com"
 git config --global core.editor "vim"
 git config --global core.fsmonitor true
 git config --global core.untrackedCache true
