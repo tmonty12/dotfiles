@@ -31,6 +31,15 @@
           };
         };
 
+        "bataquaman" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${linuxSystem};
+          modules = [ ./home.nix ];
+          extraSpecialArgs = {
+            user = "tmontfort";
+            homeDirectory = "/home/tmontfort";
+          };
+        };
+
         "brev-vm" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.${linuxSystem};
           modules = [ ./home.nix ];  # Use the same file with conditionals

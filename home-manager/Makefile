@@ -1,7 +1,7 @@
 # Home Manager Makefile
 # Commands to manage Nix home-manager configuration
 
-.PHONY: help install home vm vm-arm clean backup check
+.PHONY: help install home bataquaman vm vm-arm clean backup check
 
 # Colors
 GREEN := \033[0;32m
@@ -26,7 +26,7 @@ help: ## Show this help message
 	@echo "$(YELLOW)First time setup:$(NC)"
 	@echo "  1. Run 'make install' to install Nix"
 	@echo "  2. Restart your terminal"
-	@echo "  3. Run 'make home' or 'make vm'"
+	@echo "  3. Run 'make home', 'make bataquaman', or 'make vm'"
 
 install: ## Install Nix using official installer
 	@echo "$(BLUE)==> Installing Nix with official installer...$(NC)"
@@ -34,7 +34,7 @@ install: ## Install Nix using official installer
 		echo "$(YELLOW)Installing Nix for $(OS) ($(ARCH))...$(NC)"; \
 		curl -L https://nixos.org/nix/install | sh -s -- --daemon; \
 		echo "$(GREEN)✓ Nix installed successfully$(NC)"; \
-			echo "$(YELLOW)! Please restart your terminal and run 'make home' or 'make vm'$(NC)"; \
+		echo "$(YELLOW)! Please restart your terminal and run 'make home', 'make bataquaman', or 'make vm'$(NC)"; \
 	else \
 		echo "$(GREEN)✓ Nix is already installed$(NC)"; \
 	fi
@@ -72,6 +72,12 @@ home: backup check ## Apply local macOS configuration (tmontfort)
 	@echo "$(GREEN)✓ Home configuration applied successfully!$(NC)"
 	@echo "$(YELLOW)Run 'source ~/.zshrc' or restart your terminal$(NC)"
 
+bataquaman: backup check ## Apply bataquaman Linux configuration (tmontfort)
+	@echo "$(BLUE)==> Applying bataquaman configuration...$(NC)"
+	@nix run home-manager/master -- switch --flake .#bataquaman -b backup
+	@echo "$(GREEN)✓ Bataquaman configuration applied successfully!$(NC)"
+	@echo "$(YELLOW)Run 'source ~/.zshrc' or restart your terminal$(NC)"
+
 vm: backup check ## Apply VM configuration (auto-detects user)
 	@echo "$(BLUE)==> Applying VM configuration...$(NC)"
 	@if [ "$(USERNAME)" = "nvidia" ]; then \
@@ -91,8 +97,9 @@ vm-arm: backup check ## Apply VM configuration (ubuntu@linux aarch64)
 rebuild: check ## Quick rebuild current configuration
 	@echo "$(BLUE)==> Rebuilding current configuration...$(NC)"
 	@echo "$(YELLOW)Please specify which config to rebuild:$(NC)"
-	@echo "  make home   - for home config"
-	@echo "  make vm     - for VM config"
+	@echo "  make home        - for home config"
+	@echo "  make bataquaman  - for bataquaman config"
+	@echo "  make vm          - for VM config"
 
 clean: ## Clean up Nix store and old generations
 	@echo "$(BLUE)==> Cleaning up...$(NC)"

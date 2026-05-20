@@ -25,6 +25,7 @@ After restarting the terminal, apply a target:
 
 ```bash
 make home      # local macOS target for tmontfort
+make bataquaman  # Linux target for tmontfort
 make vm        # Linux VM target, auto-selects nvidia vs ubuntu
 make vm-arm    # Linux ARM VM target
 ```
@@ -34,6 +35,7 @@ make vm-arm    # Linux ARM VM target
 Targets are defined in `flake.nix`:
 
 - `home`: local macOS config for `tmontfort` at `/Users/tmontfort`
+- `bataquaman`: Linux config for `tmontfort` at `/home/tmontfort`
 - `brev-vm`: Linux config for `ubuntu`
 - `brev-vm-gpu`: Linux config for `nvidia`
 - `brev-vm-arm`: ARM Linux config for `ubuntu`
