@@ -5,8 +5,8 @@
     enable = true;
     
     # User information
-    userName = "Ishan Dhanani";  # Update with your name
-    userEmail = "ishandhanani@gmail.com";  # Update with your email
+    userName = "Thomas Montfort";
+    userEmail = "tjmontfort12@gmail.com";
     
     # Core settings
     extraConfig = {
