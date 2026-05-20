@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, useForwardedSshAgent ? false, ... }:
 
 {
   programs.ssh = {
@@ -23,6 +23,10 @@
       "github.com" = {
         hostname = "github.com";
         user = "git";
+      } // lib.optionalAttrs useForwardedSshAgent {
+        identitiesOnly = false;
+        addKeysToAgent = "no";
+      } // lib.optionalAttrs (!useForwardedSshAgent) {
         identityFile = "~/.ssh/id_rsa";
         identitiesOnly = true;
         addKeysToAgent = "yes";
@@ -35,8 +39,9 @@
     mkdir -p ~/.ssh/sockets
   '';
 
-  # Enable ssh-agent only on Linux
-  services.ssh-agent.enable = pkgs.stdenv.isLinux;
+  # Enable a local ssh-agent on Linux unless this host is expected to use
+  # an agent forwarded by the client that SSHed into it.
+  services.ssh-agent.enable = pkgs.stdenv.isLinux && !useForwardedSshAgent;
 
   # macOS-specific helper: automatically add key to agent/keychain if not already present
   home.activation.sshAddKey = lib.mkIf pkgs.stdenv.isDarwin ''
@@ -49,7 +54,7 @@
   '';
 
   # Linux: add your key automatically on login if agent is running and key not already loaded
-  home.activation.sshAddKeyLinux = lib.mkIf pkgs.stdenv.isLinux ''
+  home.activation.sshAddKeyLinux = lib.mkIf (pkgs.stdenv.isLinux && !useForwardedSshAgent) ''
     if [ -f ~/.ssh/id_rsa ]; then
       # Check if agent is running and key is not already loaded
       if ! ssh-add -l >/dev/null 2>&1 | grep -q id_rsa; then

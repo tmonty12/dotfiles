@@ -38,6 +38,7 @@
           extraSpecialArgs = {
             user = "tmontfort";
             homeDirectory = "/home/tmontfort";
+            useForwardedSshAgent = true;
           };
         };
 
