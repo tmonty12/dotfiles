@@ -28,8 +28,8 @@ in
     
     # Environment variables
     sessionVariables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
+      EDITOR = "vim";
+      VISUAL = "vim";
       RUSTC_WRAPPER = "sccache";
     };
     
@@ -53,7 +53,7 @@ in
       gorepo = "cd ~/Documents/repos";
       
       # Basic aliases
-      v = "nvim";
+      v = "vim";
       d = "docker";
       dc = "docker compose";
       k = "kubectl";

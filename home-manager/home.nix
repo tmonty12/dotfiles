@@ -17,7 +17,7 @@ in
       # Quick edits
       edit-home = "$EDITOR ~/.config/home-manager/home.nix";
       rebuild = "home-manager switch";
-      v = "nvim";
+      v = "vim";
     };
     
     # Session path additions
