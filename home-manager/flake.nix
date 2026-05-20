@@ -1,5 +1,5 @@
 {
-  description = "Ishan's minimal Home Manager configuration";
+  description = "Home Manager configuration";
 
   inputs = {
     # Nixpkgs
@@ -21,13 +21,13 @@
     {
       # Home Manager configurations
       homeConfigurations = {
-        # macOS configuration
+        # Local macOS configuration
         "home" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.${darwinSystem};
           modules = [ ./home.nix ];
           extraSpecialArgs = {
-            user = "ishandhanani";
-            homeDirectory = "/Users/ishandhanani";
+            user = "tmontfort";
+            homeDirectory = "/Users/tmontfort";
           };
         };
 
