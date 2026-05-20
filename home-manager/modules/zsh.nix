@@ -63,12 +63,6 @@ in
       # ai 
       ai = "y-cli chat";
 
-      # Tool aliases
-      cat = "bat --style=plain --paging=never";
-      l = "eza --color=always --group-directories-first";
-      ll = "eza -la --color=always --group-directories-first";
-      lt = "eza --tree";
-      
       # Networking
       myip = "curl -s icanhazip.com";
 
