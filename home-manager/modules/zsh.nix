@@ -83,6 +83,8 @@ in
         autoload -Uz edit-command-line
         zle -N edit-command-line
         bindkey '^X^E' edit-command-line
+        bindkey -M viins '^A' beginning-of-line
+        bindkey -M viins '^E' end-of-line
         bindkey "^[b" backward-word
         bindkey "^[f" forward-word
         
