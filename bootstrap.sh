@@ -289,7 +289,8 @@ git config --global core.editor "vim"
 git config --global core.fsmonitor true
 git config --global core.untrackedCache true
 git config --global init.defaultBranch "main"
-git config --global pull.rebase false
+git config --global pull.rebase true
+git config --global rebase.autoStash true
 git config --global push.default "simple"
 git config --global core.pager "delta"
 git config --global interactive.diffFilter "delta --color-only"
