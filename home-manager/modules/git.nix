@@ -32,7 +32,8 @@
       gpg = {
         format = "ssh";
       } // lib.optionalAttrs useForwardedSshAgent {
-        ssh.defaultKeyCommand = "ssh-add -L";
+        ssh.defaultKeyCommand = "${config.home.homeDirectory}/.local/bin/git-ssh-default-key-command";
+        ssh.program = "${config.home.homeDirectory}/.local/bin/git-ssh-keygen";
       };
       
       url = {
@@ -67,5 +68,27 @@
 
   programs.gh-dash = {
     enable = true;  # GitHub CLI
+  };
+
+  home.file.".local/bin/git-ssh-keygen" = lib.mkIf useForwardedSshAgent {
+    executable = true;
+    text = ''
+      #!/bin/sh
+      if [ -S "$HOME/.ssh/agent.sock" ]; then
+        export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
+      fi
+      exec ${pkgs.openssh}/bin/ssh-keygen "$@"
+    '';
+  };
+
+  home.file.".local/bin/git-ssh-default-key-command" = lib.mkIf useForwardedSshAgent {
+    executable = true;
+    text = ''
+      #!/bin/sh
+      if [ -S "$HOME/.ssh/agent.sock" ]; then
+        export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
+      fi
+      exec ${pkgs.openssh}/bin/ssh-add -L
+    '';
   };
 }

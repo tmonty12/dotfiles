@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, useForwardedSshAgent ? false, ... }:
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
@@ -75,6 +75,11 @@ in
       # Early setup (PATH is handled by sessionPath in home.nix)
       (lib.mkBefore ''
         export GPG_TTY="$(tty)"
+        ${lib.optionalString useForwardedSshAgent ''
+        if [ -S "$HOME/.ssh/agent.sock" ]; then
+          export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
+        fi
+        ''}
       '')
 
       # Main configuration

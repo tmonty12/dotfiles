@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, useForwardedSshAgent ? false, ... }:
 
 {
   programs.bash = {
@@ -51,6 +51,11 @@
     initExtra = ''
       # PATH is handled by sessionPath in home.nix
       export GPG_TTY="$(tty)"
+      ${lib.optionalString useForwardedSshAgent ''
+      if [ -S "$HOME/.ssh/agent.sock" ]; then
+        export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
+      fi
+      ''}
 
       # Source external env if exists
       [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"

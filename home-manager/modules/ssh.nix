@@ -39,6 +39,22 @@
     mkdir -p ~/.ssh/sockets
   '';
 
+  # SSH agent forwarding creates per-connection sockets under /tmp/ssh-*.
+  # Long-lived remote processes can inherit one of those paths and later lose
+  # signing access when the originating SSH session exits. Keep a stable
+  # symlink refreshed for every SSH login/command on forwarded-agent hosts.
+  home.file.".ssh/rc" = lib.mkIf useForwardedSshAgent {
+    executable = true;
+    text = ''
+      #!/bin/sh
+      if [ -n "''${SSH_AUTH_SOCK:-}" ] && [ -S "$SSH_AUTH_SOCK" ]; then
+        mkdir -p "$HOME/.ssh"
+        chmod 700 "$HOME/.ssh"
+        ln -sfn "$SSH_AUTH_SOCK" "$HOME/.ssh/agent.sock"
+      fi
+    '';
+  };
+
   # Enable a local ssh-agent on Linux unless this host is expected to use
   # an agent forwarded by the client that SSHed into it.
   services.ssh-agent.enable = pkgs.stdenv.isLinux && !useForwardedSshAgent;
