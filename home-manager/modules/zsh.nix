@@ -74,6 +74,10 @@ in
     initContent = lib.mkMerge [
       # Early setup (PATH is handled by sessionPath in home.nix)
       (lib.mkBefore ''
+        if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+          . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+        fi
+
         export GPG_TTY="$(tty)"
         ${lib.optionalString useForwardedSshAgent ''
         if [ -S "$HOME/.ssh/agent.sock" ]; then
