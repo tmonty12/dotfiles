@@ -50,6 +50,7 @@
     # Bash-specific configuration
     initExtra = ''
       # PATH is handled by sessionPath in home.nix
+      ulimit -n 8192 2>/dev/null || true
       export GPG_TTY="$(tty)"
       ${lib.optionalString useForwardedSshAgent ''
       if [ -S "$HOME/.ssh/agent.sock" ]; then

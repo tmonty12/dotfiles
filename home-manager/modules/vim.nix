@@ -17,6 +17,9 @@
       set number
       syntax on
       colorscheme jellybeans
+      set cursorline
+      highlight Cursor ctermfg=16 ctermbg=226 guifg=#000000 guibg=#ffff00
+      highlight CursorLine ctermbg=236 guibg=#303030
 
       " Limit viminfo to prevent slow startup
       " '10 = marks for 10 files, <50 = 50 lines per register, s10 = 10kb max item size

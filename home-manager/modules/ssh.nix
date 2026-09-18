@@ -11,14 +11,14 @@
       "*" = {
         extraOptions = {
           "AddKeysToAgent" = "yes";
-          "ServerAliveInterval" = "60";
-          "ServerAliveCountMax" = "3";
         } // lib.optionalAttrs pkgs.stdenv.isDarwin {
           "UseKeychain" = "yes";
         };
         controlMaster = "auto";
         controlPath = "~/.ssh/sockets/%r@%h-%p";
         controlPersist = "600";
+        serverAliveInterval = 30;
+        serverAliveCountMax = 3;
       };
       "github.com" = {
         hostname = "github.com";

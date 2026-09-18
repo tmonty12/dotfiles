@@ -416,7 +416,11 @@ def extract_command_prefix(cmd: str) -> str:
     return "(shell)"
 
 
-def find_touched_extensions(text: str) -> Counter[str]:
+def find_touched_extensions(text: object) -> Counter[str]:
+    if isinstance(text, list):
+        text = "\n".join(str(part) for part in text)
+    elif not isinstance(text, str):
+        text = str(text)
     counts: Counter[str] = Counter()
     for match in PATH_SUFFIX_RE.finditer(text):
         suffix = Path(match.group("path")).suffix.lower()
@@ -519,6 +523,10 @@ def analyze_session(path: Path) -> SessionSummary | None:
                 continue
             if payload_type == "function_call_output":
                 output = payload.get("output", "")
+                if isinstance(output, list):
+                    output = "\n".join(str(part) for part in output)
+                elif not isinstance(output, str):
+                    output = str(output)
                 state.touched_extensions.update(find_touched_extensions(output))
                 match = EXIT_CODE_RE.search(output)
                 if match and int(match.group(1)) != 0:

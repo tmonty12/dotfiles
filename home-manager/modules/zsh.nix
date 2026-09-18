@@ -78,6 +78,7 @@ in
           . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
         fi
 
+        ulimit -n 8192 2>/dev/null || true
         export GPG_TTY="$(tty)"
         ${lib.optionalString useForwardedSshAgent ''
         if [ -S "$HOME/.ssh/agent.sock" ]; then
