@@ -29,7 +29,7 @@
           extraSpecialArgs = {
             user = "tmontfort";
             homeDirectory = "/Users/tmontfort";
-            useForwardedSshAgent = true;
+            useForwardedSshAgent = false;
           };
         };
 
@@ -49,7 +49,7 @@
           extraSpecialArgs = {
             user = "ubuntu";
             homeDirectory = "/home/ubuntu";
-            useForwardedSshAgent = true;
+            useForwardedSshAgent = false;
           };
         };
 
@@ -59,7 +59,7 @@
           extraSpecialArgs = {
             user = "nvidia";
             homeDirectory = "/home/nvidia";
-            useForwardedSshAgent = true;
+            useForwardedSshAgent = false;
           };
         };
 
